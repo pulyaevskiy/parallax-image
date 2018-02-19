@@ -1,0 +1,12 @@
+name: parallax_image
+description: A new flutter package project.
+version: 0.1.0
+author:
+homepage:
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  test: ^0.12.0
