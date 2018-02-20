@@ -1,6 +1,6 @@
 # parallax_image
 
-Parallax image widget for Flutter.
+A Flutter widget that paints an image and moves it at a slower speed than the main scrolling content.
 
 ![demo.gif](demo.gif)
 
@@ -34,16 +34,18 @@ class MyWidgetState extends State<MyWidget> {
             children: <Widget>[
                 new ParallaxImage(
                     controller: _controller,
-                    image: new AssetImage('images/some.jpg'),
+                    image: new AssetImage('images/january.jpg'),
                     // Extent of this widget in scroll direction.
-                    // In this case it is vertical scroll so it defines 
-                    // the height of this widget. 
+                    // In this case it is vertical scroll so extent defines
+                    // the height of this widget.
                     // The image is scaled with BoxFit.fitWidth which makes it
                     // occupy full width of this widget.
-                    // Scaled image should normally have height greater 
+                    // After image is scaled it should normally have height greater 
                     // than this value to allow for parallax effect to be
                     // visible.
                     extent: 100.0,
+                    // Optionally specify child widget.
+                    child: new Text('January'),
                 ),
                 // ...add more list items
             ]
