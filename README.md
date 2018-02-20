@@ -52,6 +52,8 @@ class MyWidgetState extends State<MyWidget> {
 }
 ```
 
+See `example/` folder for a complete demo.
+
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker][issue_tracker].
