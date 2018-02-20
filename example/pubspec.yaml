@@ -28,18 +28,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - images/Original-Star-Wars-Storyboard-Illustrations1.jpg
-   - images/Original-Star-Wars-Storyboard-Illustrations2.jpg
-   - images/Original-Star-Wars-Storyboard-Illustrations3.jpg
-   - images/Original-Star-Wars-Storyboard-Illustrations4.jpg
-   - images/Original-Star-Wars-Storyboard-Illustrations5.jpg
-   - images/Original-Star-Wars-Storyboard-Illustrations6.jpg
-   - images/Original-Star-Wars-Storyboard-Illustrations7.jpg
-   - images/Original-Star-Wars-Storyboard-Illustrations8.jpg
-   - images/Original-Star-Wars-Storyboard-Illustrations9.jpg
-   - images/Original-Star-Wars-Storyboard-Illustrations10.jpg
-   - images/Original-Star-Wars-Storyboard-Illustrations11.jpg
-   - images/Original-Star-Wars-Storyboard-Illustrations12.jpg
-   - images/Original-Star-Wars-Storyboard-Illustrations13.jpg
-   - images/Original-Star-Wars-Storyboard-Illustrations14.jpg
-   - images/Original-Star-Wars-Storyboard-Illustrations15.jpg
+   - images/img1.jpg
+   - images/img2.jpg
+   - images/img3.jpg
+   - images/img4.jpg
+   - images/img5.jpg
+   - images/img6.jpg
+   - images/img7.jpg

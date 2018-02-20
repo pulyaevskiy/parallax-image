@@ -1,8 +1,8 @@
 name: parallax_image
-description: A new flutter package project.
+description: A Flutter widget that paints an image and moves it at a slower speed than the main scrolling content.
 version: 0.1.0
-author:
-homepage:
+homepage: https://github.com/pulyaevskiy/parallax-image
+author: Anatoly Pulyaevskiy <anatoly.pulyaevskiy@gmail.com>
 
 dependencies:
   flutter:

@@ -8,9 +8,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Parallax Image Demo',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: new ThemeData(primarySwatch: Colors.blueGrey),
       home: new MyHomePage(title: 'Parallax Image Demo'),
     );
   }
@@ -25,28 +23,74 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final ScrollController _controller = new ScrollController();
+  final ScrollController _verticalController = new ScrollController();
+  final ScrollController _horizontalController = new ScrollController();
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return new Scaffold(
       appBar: new AppBar(title: new Text(widget.title)),
-      body: new ListView.builder(
-        itemBuilder: _buildChild,
-        controller: _controller,
+      body: new Column(
+        children: <Widget>[
+          new Container(
+            padding: const EdgeInsets.all(20.0),
+            child: new Text(
+              'Horizontal scroll parallax',
+              style: theme.textTheme.title,
+            ),
+          ),
+          new Container(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            constraints: const BoxConstraints(maxHeight: 200.0),
+            child: new ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemBuilder: _buildHorizontalChild,
+              controller: _horizontalController,
+            ),
+          ),
+          new Container(
+            padding: const EdgeInsets.all(20.0),
+            child: new Text(
+              'Vertical scroll parallax',
+              style: theme.textTheme.title,
+            ),
+          ),
+          new Expanded(
+            child: new ListView.builder(
+              itemBuilder: _buildVerticalChild,
+              controller: _verticalController,
+            ),
+          )
+        ],
       ),
     );
   }
 
-  Widget _buildChild(BuildContext context, int index) {
-    if (index >= 15) return null;
+  Widget _buildVerticalChild(BuildContext context, int index) {
     index++;
+    if (index > 7) return null;
     return new Padding(
-      padding: const EdgeInsets.only(bottom: 1.0),
+      padding: const EdgeInsets.only(bottom: 10.0),
       child: new ParallaxImage(
-        size: 150.0,
-        controller: _controller,
+        extent: 150.0,
+        controller: _verticalController,
         image: new ExactAssetImage(
-          'images/Original-Star-Wars-Storyboard-Illustrations$index.jpg',
+          'images/img$index.jpg',
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHorizontalChild(BuildContext context, int index) {
+    index++;
+    if (index > 7) return null;
+    return new Padding(
+      padding: const EdgeInsets.only(right: 10.0),
+      child: new ParallaxImage(
+        extent: 100.0,
+        controller: _horizontalController,
+        image: new ExactAssetImage(
+          'images/img$index.jpg',
         ),
       ),
     );
