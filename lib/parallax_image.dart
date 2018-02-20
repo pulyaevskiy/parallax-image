@@ -5,9 +5,9 @@
 /// scrolling content.
 library parallax_image;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
-import 'package:meta/meta.dart';
 
 /// A widget that paints an image and moves it at a slower speed than the main
 /// scrolling content.

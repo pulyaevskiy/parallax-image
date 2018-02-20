@@ -4,6 +4,9 @@ version: 0.1.0
 homepage: https://github.com/pulyaevskiy/parallax-image
 author: Anatoly Pulyaevskiy <anatoly.pulyaevskiy@gmail.com>
 
+environment:
+  sdk: '>=2.0.0-dev <2.0.0'
+
 dependencies:
   flutter:
     sdk: flutter
