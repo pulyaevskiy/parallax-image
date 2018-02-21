@@ -13,8 +13,11 @@ import 'package:flutter/rendering.dart';
 /// scrolling content.
 ///
 /// Image is rendered in a box with specified [extent] in the scroll direction.
-/// Provided [ScrollController] is used to determine scroll direction and to
-/// notify about scroll events.
+///
+/// If scroll [controller] is provided then this widget reacts to scrolling
+/// updates in [ScrollController.position] which assumes that controller is
+/// attached to only one [Scrollable]. Otherwise this widget looks for
+/// nearest [Scrollable] ancestor and subscribes to scrolling updates on it.
 ///
 /// When scroll direction is [Axis.vertical] the image is scaled to fit width
 /// ([BoxFit.fitWidth]) of parent widget. For [Axis.horizontal] scroll direction
@@ -22,12 +25,17 @@ import 'package:flutter/rendering.dart';
 class ParallaxImage extends StatelessWidget {
   /// Creates new [ParallaxImage].
   ///
-  /// [image], [controller] and [extent] arguments are required.
+  /// [image] and [extent] arguments are required.
+  ///
+  /// If scroll [controller] is provided then created widget reacts to scrolling
+  /// updates in [ScrollController.position] which assumes that controller is
+  /// attached to only one [Scrollable]. Otherwise created widget looks for
+  /// nearest [Scrollable] ancestor and subscribes to scrolling updates on it.
   ParallaxImage({
     Key key,
     @required this.image,
-    @required this.controller,
     @required this.extent,
+    this.controller,
     this.color,
     this.child,
   })
@@ -38,6 +46,9 @@ class ParallaxImage extends StatelessWidget {
 
   /// Scroll controller which determines scroll direction and notifies this
   /// widget of scroll position changes.
+  ///
+  /// If `null` then this widget uses nearest [Scrollable] ancestor to determine
+  /// scroll direction and listen for scroll position changes.
   final ScrollController controller;
 
   /// Extent of this widget in scroll direction.
@@ -55,7 +66,10 @@ class ParallaxImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
-    final constraints = (controller.position.axis == Axis.vertical)
+    final scrollPosition = (controller != null)
+        ? controller.position
+        : Scrollable.of(context).position;
+    final constraints = (scrollPosition.axis == Axis.vertical)
         ? new BoxConstraints(minHeight: extent)
         : new BoxConstraints(minWidth: extent);
     return new RepaintBoundary(
@@ -63,12 +77,21 @@ class ParallaxImage extends StatelessWidget {
         constraints: constraints,
         child: new _Parallax(
           image: image,
-          controller: controller,
+          scrollPosition: scrollPosition,
           child: child,
           screenSize: media.size,
         ),
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder description) {
+    super.debugFillProperties(description);
+
+    description.add(new DoubleProperty('extent', extent));
+    description.add(new DiagnosticsProperty<ImageProvider>('image', image));
+    description.add(new DiagnosticsProperty<Color>('color', color));
   }
 }
 
@@ -76,21 +99,21 @@ class _Parallax extends SingleChildRenderObjectWidget {
   _Parallax({
     Key key,
     @required this.image,
-    @required this.controller,
+    @required this.scrollPosition,
     @required this.screenSize,
     this.color,
     Widget child,
   })
       : super(key: key, child: child);
   final ImageProvider image;
-  final ScrollController controller;
+  final ScrollPosition scrollPosition;
   final Size screenSize;
   final Color color;
 
   @override
   _RenderParallax createRenderObject(BuildContext context) {
     return new _RenderParallax(
-      controller: controller,
+      scrollPosition: scrollPosition,
       image: image,
       screenSize: screenSize,
       color: color,
@@ -101,7 +124,7 @@ class _Parallax extends SingleChildRenderObjectWidget {
   void updateRenderObject(BuildContext context, _RenderParallax renderObject) {
     renderObject
       ..image = image
-      ..controller = controller
+      ..scrollPosition = scrollPosition
       ..screenSize = screenSize
       ..color = color;
   }
@@ -109,7 +132,7 @@ class _Parallax extends SingleChildRenderObjectWidget {
 
 class _RenderParallax extends RenderProxyBox {
   _RenderParallax({
-    @required ScrollController controller,
+    @required ScrollPosition scrollPosition,
     @required ImageProvider image,
     @required Size screenSize,
     Color color,
@@ -117,14 +140,14 @@ class _RenderParallax extends RenderProxyBox {
     RenderBox child,
   })
       : _image = image,
-        _controller = controller,
+        _scrollPosition = scrollPosition,
         _screenSize = screenSize,
         _color = color,
         _configuration = configuration,
         super(child);
 
   ImageProvider _image;
-  ScrollController _controller;
+  ScrollPosition _scrollPosition;
   Size _screenSize;
   Color _color;
   ImageConfiguration _configuration;
@@ -140,11 +163,11 @@ class _RenderParallax extends RenderProxyBox {
     markNeedsPaint();
   }
 
-  set controller(ScrollController value) {
-    if (value == _controller) return;
-    if (attached) _controller.removeListener(markNeedsPaint);
-    _controller = value;
-    if (attached) _controller.addListener(markNeedsPaint);
+  set scrollPosition(ScrollPosition value) {
+    if (value == _scrollPosition) return;
+    if (attached) _scrollPosition.removeListener(markNeedsPaint);
+    _scrollPosition = value;
+    if (attached) _scrollPosition.addListener(markNeedsPaint);
     markNeedsPaint();
   }
 
@@ -188,7 +211,7 @@ class _RenderParallax extends RenderProxyBox {
 
     // TODO: Might be a good idea to provide a way to customize this logic.
     Alignment alignment;
-    if (_controller.position.axis == Axis.vertical) {
+    if (_scrollPosition.axis == Axis.vertical) {
       double value = (_position.dy / _screenSize.height - 0.5).clamp(-1.0, 1.0);
       alignment = new Alignment(0.0, value);
     } else {
@@ -210,7 +233,7 @@ class _RenderParallax extends RenderProxyBox {
   Decoration _decoration;
 
   BoxFit get fit {
-    return (_controller.position.axis == Axis.vertical)
+    return (_scrollPosition.axis == Axis.vertical)
         ? BoxFit.fitWidth
         : BoxFit.fitHeight;
   }
@@ -218,14 +241,14 @@ class _RenderParallax extends RenderProxyBox {
   @override
   void attach(PipelineOwner owner) {
     super.attach(owner);
-    _controller.addListener(markNeedsPaint);
+    _scrollPosition.addListener(markNeedsPaint);
   }
 
   @override
   void detach() {
     _painter?.dispose();
     _painter = null;
-    _controller.removeListener(markNeedsPaint);
+    _scrollPosition.removeListener(markNeedsPaint);
     super.detach();
     markNeedsPaint();
   }
@@ -272,6 +295,10 @@ class _RenderParallax extends RenderProxyBox {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder description) {
     super.debugFillProperties(description);
+
+    description.add(new DiagnosticsProperty<ScrollPosition>(
+        'scrollPosition', _scrollPosition));
+    description.add(new DiagnosticsProperty<Size>('screenSize', _screenSize));
     description.add(_decoration.toDiagnosticsNode(name: 'decoration'));
     description.add(new DiagnosticsProperty<ImageConfiguration>(
         'configuration', configuration));

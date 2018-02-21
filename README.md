@@ -10,14 +10,16 @@ Add dependency to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  parallax_image: ^0.1.0
+  parallax_image: ^0.2.0
 ```
 
 ## Usage
 
-`ParallaxImage` can be used with any `Scrollable` (`ListView` for instance)
-and only depends on an instance of `ScrollController` attached to that 
-scrollable.
+`ParallaxImage` can be used with any `Scrollable` (`ListView` for instance).
+When created, it subscribes to scroll updates on nearest `Scrollable` ancestor.
+It is also possible to specify custom `ScrollController` in which case this
+widget subscribes to updates on `ScrollController.position` (assumes that
+controller is attached to only one `Scrollable`).
 
 ```dart
 class MyWidget extends StatefulWidget {
@@ -33,7 +35,6 @@ class MyWidgetState extends State<MyWidget> {
             controller: _controller,
             children: <Widget>[
                 new ParallaxImage(
-                    controller: _controller,
                     image: new AssetImage('images/january.jpg'),
                     // Extent of this widget in scroll direction.
                     // In this case it is vertical scroll so extent defines
@@ -46,6 +47,8 @@ class MyWidgetState extends State<MyWidget> {
                     extent: 100.0,
                     // Optionally specify child widget.
                     child: new Text('January'),
+                    // Optinally specify scroll controller.
+                    controller: _controller,
                 ),
                 // ...add more list items
             ]

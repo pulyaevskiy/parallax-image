@@ -14,22 +14,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  final ScrollController _verticalController = new ScrollController();
-  final ScrollController _horizontalController = new ScrollController();
-  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return new Scaffold(
-      appBar: new AppBar(title: new Text(widget.title)),
+      appBar: new AppBar(title: new Text(title)),
       body: new Column(
         children: <Widget>[
           new Container(
@@ -45,7 +38,6 @@ class _MyHomePageState extends State<MyHomePage> {
             child: new ListView.builder(
               scrollDirection: Axis.horizontal,
               itemBuilder: _buildHorizontalChild,
-              controller: _horizontalController,
             ),
           ),
           new Container(
@@ -58,7 +50,6 @@ class _MyHomePageState extends State<MyHomePage> {
           new Expanded(
             child: new ListView.builder(
               itemBuilder: _buildVerticalChild,
-              controller: _verticalController,
             ),
           )
         ],
@@ -73,7 +64,6 @@ class _MyHomePageState extends State<MyHomePage> {
       padding: const EdgeInsets.only(bottom: 10.0),
       child: new ParallaxImage(
         extent: 150.0,
-        controller: _verticalController,
         image: new ExactAssetImage(
           'images/img$index.jpg',
         ),
@@ -88,7 +78,6 @@ class _MyHomePageState extends State<MyHomePage> {
       padding: const EdgeInsets.only(right: 10.0),
       child: new ParallaxImage(
         extent: 100.0,
-        controller: _horizontalController,
         image: new ExactAssetImage(
           'images/img$index.jpg',
         ),
