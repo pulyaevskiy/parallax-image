@@ -28,12 +28,12 @@ class MyWidget extends StatefulWidget {
 }
 
 class MyWidgetState extends State<MyWidget> {
-    final ScrollController _controller = new ScrollController();
+    final _controller = new ScrollController();
     @override
     Widget build(BuildContext context) {
         return new ListView(
             controller: _controller,
-            children: <Widget>[
+            children: [
                 new ParallaxImage(
                     image: new AssetImage('images/january.jpg'),
                     // Extent of this widget in scroll direction.
