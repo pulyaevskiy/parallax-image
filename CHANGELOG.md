@@ -1,3 +1,7 @@
+## [0.2.0+1]
+
+* Readme updates.
+
 ## [0.2.0]
 
 * `controller` argument in `ParallaxImage` constructor is no longer required.
