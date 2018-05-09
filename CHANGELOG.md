@@ -1,3 +1,8 @@
+## [0.3.0]
+
+* Enable hit testing so that `ParallaxImage` can be used inside
+  `GestureDetector`.
+
 ## [0.2.0+1]
 
 * Readme updates.

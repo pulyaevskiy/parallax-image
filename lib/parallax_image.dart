@@ -253,6 +253,9 @@ class _RenderParallax extends RenderProxyBox {
     markNeedsPaint();
   }
 
+  @protected
+  bool hitTestSelf(Offset position) => true;
+
   @override
   void paint(PaintingContext context, Offset offset) {
     assert(size.width != null);

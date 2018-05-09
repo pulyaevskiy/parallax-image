@@ -62,10 +62,15 @@ class MyHomePage extends StatelessWidget {
     if (index > 7) return null;
     return new Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
-      child: new ParallaxImage(
-        extent: 150.0,
-        image: new ExactAssetImage(
-          'images/img$index.jpg',
+      child: new GestureDetector(
+        onTap: () {
+          print('Tapped $index');
+        },
+        child: new ParallaxImage(
+          extent: 150.0,
+          image: new ExactAssetImage(
+            'images/img$index.jpg',
+          ),
         ),
       ),
     );
