@@ -38,8 +38,7 @@ class ParallaxImage extends StatelessWidget {
     this.controller,
     this.color,
     this.child,
-  })
-      : super(key: key);
+  }) : super(key: key);
 
   /// The image to paint.
   final ImageProvider image;
@@ -103,8 +102,7 @@ class _Parallax extends SingleChildRenderObjectWidget {
     @required this.screenSize,
     this.color,
     Widget child,
-  })
-      : super(key: key, child: child);
+  }) : super(key: key, child: child);
   final ImageProvider image;
   final ScrollPosition scrollPosition;
   final Size screenSize;
@@ -138,8 +136,7 @@ class _RenderParallax extends RenderProxyBox {
     Color color,
     ImageConfiguration configuration: ImageConfiguration.empty,
     RenderBox child,
-  })
-      : _image = image,
+  })  : _image = image,
         _scrollPosition = scrollPosition,
         _screenSize = screenSize,
         _color = color,
