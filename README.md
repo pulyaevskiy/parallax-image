@@ -9,7 +9,7 @@ Add dependency to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  parallax_image: ^0.2.0
+  parallax_image: [latest version]
 ```
 
 ## Usage
