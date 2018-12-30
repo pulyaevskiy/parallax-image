@@ -56,7 +56,7 @@ class ParallaxImage extends StatelessWidget {
   /// if scroll direction is [Axis.horizontal] it is the width.
   final double extent;
 
-  /// Optinal color to paint behind the [image].
+  /// Optional color to paint behind the [image].
   final Color color;
 
   /// The optional child of this widget.

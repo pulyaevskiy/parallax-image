@@ -1,3 +1,7 @@
+## [0.3.1]
+
+* Fixed analyzer warnings.
+
 ## [0.3.0]
 
 * Enable hit testing so that `ParallaxImage` can be used inside
