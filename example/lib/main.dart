@@ -15,14 +15,14 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyHomePage({Key? key, this.title}) : super(key: key);
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return new Scaffold(
-      appBar: new AppBar(title: new Text(title)),
+      appBar: new AppBar(title: new Text(title!)),
       body: new Column(
         children: <Widget>[
           new Container(
@@ -59,7 +59,7 @@ class MyHomePage extends StatelessWidget {
 
   Widget _buildVerticalChild(BuildContext context, int index) {
     index++;
-    if (index > 7) return null;
+    if (index > 7) return Container();
     return new Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: new GestureDetector(
@@ -78,7 +78,7 @@ class MyHomePage extends StatelessWidget {
 
   Widget _buildHorizontalChild(BuildContext context, int index) {
     index++;
-    if (index > 7) return null;
+    if (index > 7) return Container();
     return new Padding(
       padding: const EdgeInsets.only(right: 10.0),
       child: new ParallaxImage(
