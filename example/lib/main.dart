@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
@@ -29,7 +29,7 @@ class MyHomePage extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             child: new Text(
               'Horizontal scroll parallax',
-              style: theme.textTheme.title,
+              style: theme.textTheme.titleMedium, //.title / harfang
             ),
           ),
           new Container(
@@ -37,6 +37,7 @@ class MyHomePage extends StatelessWidget {
             constraints: const BoxConstraints(maxHeight: 200.0),
             child: new ListView.builder(
               scrollDirection: Axis.horizontal,
+              itemCount: 7, // null safety  / harfang
               itemBuilder: _buildHorizontalChild,
             ),
           ),
@@ -44,11 +45,12 @@ class MyHomePage extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             child: new Text(
               'Vertical scroll parallax',
-              style: theme.textTheme.title,
+              style: theme.textTheme.titleMedium, //.title / harfang
             ),
           ),
           new Expanded(
             child: new ListView.builder(
+              itemCount: 7, // null safety / harfang
               itemBuilder: _buildVerticalChild,
             ),
           )
@@ -59,7 +61,7 @@ class MyHomePage extends StatelessWidget {
 
   Widget _buildVerticalChild(BuildContext context, int index) {
     index++;
-    if (index > 7) return null;
+    if (index > 7) return Container(); //  null safety / harfang
     return new Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: new GestureDetector(
@@ -78,7 +80,8 @@ class MyHomePage extends StatelessWidget {
 
   Widget _buildHorizontalChild(BuildContext context, int index) {
     index++;
-    if (index > 7) return null;
+    if (index > 7) return Container(); // null safety safety
+
     return new Padding(
       padding: const EdgeInsets.only(right: 10.0),
       child: new ParallaxImage(

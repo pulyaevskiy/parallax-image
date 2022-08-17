@@ -1,5 +1,8 @@
 name: parallax_image_example
 description: A new Flutter project.
+version: 0.3.2
+environment:
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:

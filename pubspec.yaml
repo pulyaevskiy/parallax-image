@@ -1,11 +1,10 @@
 name: parallax_image
-description: A Flutter widget that paints an image and moves it at a slower speed than the main scrolling content.
-version: 0.3.1+1
-homepage: https://github.com/pulyaevskiy/parallax-image
-author: Anatoly Pulyaevskiy <anatoly.pulyaevskiy@gmail.com>
+description: null safe safty correction. A Flutter widget that paints an image and moves it at a slower speed than the main scrolling content.
+version: 0.3.2
+homepage: https://github.com/beautifoolplanet/parallax-image
 
 environment:
-  sdk: '>=2.0.0-dev <3.0.0'
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
