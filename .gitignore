@@ -5,5 +5,4 @@
 .pub/
 packages
 pubspec.lock
-/example/.dart_tool/
-/.dart_tool/
+
