@@ -1,6 +1,3 @@
-Null-Safety correction, 2022/08/17
-
-__
 A Flutter widget that paints an image and moves it at a slower speed than the 
 main scrolling content.
 
